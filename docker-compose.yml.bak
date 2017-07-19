@@ -1,0 +1,32 @@
+version: '2'
+services:
+  web1:
+    container_name: web1
+    image: kors89/web
+    links:
+      - db
+    ports:
+      - 9001:80
+  web2:
+    container_name: web2
+    image: kors89/web
+    ports:
+      - 9002:80
+    links:
+     - db
+  db:
+    container_name: db
+    image: kors89/db
+    environment:
+      - MYSQL_USER=kors89
+      - MYSQL_PASS=secret
+    ports:
+      - 3336:3306
+  lb:
+    container_name: lb
+    image: kors89/lb
+    ports:
+      - 9000:80
+    links:
+      - web1
+      - web2

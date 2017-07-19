@@ -1,0 +1,15 @@
+FROM centos:centos7
+
+MAINTAINER Yuriy Ivanov <Yuriy_Ivavnov@epam.com>
+
+COPY MariaDB.repo /etc/yum.repos.d/MariaDB.repo
+
+RUN yum -y install mariadb-server mariadb-client
+
+EXPOSE 3306
+
+COPY startup-db.sh /startup.sh
+
+ENTRYPOINT ["/bin/bash","/startup.sh"]
+
+CMD ["/bin/bash"]

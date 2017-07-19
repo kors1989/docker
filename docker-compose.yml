@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  web1:
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+    networks:
+      - my-net
+    ports:
+      - 9001:80
+  web2:
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+    ports:
+      - 9002:80
+    networks:
+     - my-net
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    environment:
+      - MYSQL_USER=kors89
+      - MYSQL_PASS=secret
+    ports:
+      - 3336:3306
+    networks:
+      - my-net
+  lb:
+    build:
+      context: .
+      dockerfile: Dockerfile-lb
+    ports:
+      - 9000:80
+    networks:
+      - my-net
+networks:
+  my-net:
+    driver: bridge
